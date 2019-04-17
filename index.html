@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仿微博</title>
+    <style>
+        html,body,div,span,img,ul,li,input{
+            margin: 0;
+            padding: 0;
+            font-family: Microsoft YaHei,sans-serif,Arial;
+        }
+        li {
+            list-style: none;
+        }
+        .none {
+            display: none;
+            /*-webkit-transition: all 1s;*/
+            /*-moz-transition: all 1s;*/
+            /*-ms-transition: all 1s;*/
+            /*-o-transition: all 1s;*/
+            /*transition: all 1s;*/
+        }
+        #weibo {
+            width: 800px;
+            margin: 20px auto;
+        }
+        #weibo>span:first-child {
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+            line-height: 25px;
+            vertical-align: center;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .tag{
+            font-size: 13px;
+            margin-left: 318px;
+            vertical-align: bottom;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        #textarea {
+            height: 180px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+        .facebox {
+            height: 35px;
+            margin: 15px auto 0;
+            position: relative;
+        }
+        .gif_enter {
+            float: left;
+        }
+        .submit {
+            width: 80px;
+            height: 30px;
+            background: #ff8140;
+            display: block;
+            float: right;
+            line-height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            font-family: "微软雅黑";
+        }
+        .face {
+            width: 440px;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 12px #666;
+            position: absolute;
+            top: 21px;
+            left: 15px;
+        }
+        .face > ul {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .face > ul > li {
+            width: 30px;
+            height: 30px;
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .face > ul > li > img {
+            cursor: pointer;
+        }
+        .msgCon {
+            margin: 0 auto;
+            margin-bottom: 60px;
+        }
+        .msgBox {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            padding: 0 5px;
+        }
+        .msgCon .msgBox .headUrl {
+            width: 100%;
+            height: 60px;
+            border-bottom: 1px dotted #ddd;
+            display: flex;
+            align-items: center;
+        }
+        .msgCon .msgBox .headUrl img {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+        }
+        .msgCon .msgBox .headUrl div {
+            flex: 1;
+            display: flex;
+            flex-flow: column;
+            font-size: 16px;
+            margin-left: 16px;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to top, #b224ef 0%, #7579ff 100%);
+        }
+        .msgCon .msgBox .headUrl div .time {
+            font-size: 14px;
+            margin-top: 6px;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+        }
+        .msgCon .msgBox .headUrl a {
+            font-size: 14px;
+            padding: 10px;
+            color: salmon;
+            cursor: pointer;
+        }
+        .msgCon .msgBox .msgTxt {
+            font-size: 14px;
+            color: #666;
+            min-height: 40px;
+            line-height: 24px;
+            padding: 10px;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #778899 0%, #333 100%);
+        }
+    </style>
+</head>
+<body>
+<div id="weibo">
+    <span>有什么新鲜事想告诉大家</span>
+    <span class="tag">其它微博都限定字数，我这里你随便输入。。</span>
+    <div id="textarea" cols="30" rows="10" maxlength="30" class="text" contenteditable="true"></div>
+    <div class="facebox">
+        <img src="images/bba_thumb.gif" alt="" class="gif_enter">
+        <span class="submit">发表</span>
+        <div class="face none">
+            <ul>
+                <li><img src="images/smilea_thumb.gif" title="呵呵]"></li>
+                <li><img src="images/tootha_thumb.gif" title="嘻嘻]"></li>
+                <li><img src="images/laugh.gif" title="[哈哈]"></li>
+                <li><img src="images/tza_thumb.gif" title="[可爱]"></li>
+                <li><img src="images/kl_thumb.gif" title="[可怜]"></li>
+                <li><img src="images/kbsa_thumb.gif" title="[挖鼻屎]"></li>
+                <li><img src="images/cj_thumb.gif" title="[吃惊]"></li>
+                <li><img src="images/shamea_thumb.gif" title="[害羞]"></li>
+                <li><img src="images/zy_thumb.gif" title="[挤眼]"></li>
+                <li><img src="images/bz_thumb.gif" title="[闭嘴]"></li>
+                <li><img src="images/bs2_thumb.gif" title="[鄙视]"></li>
+                <li><img src="images/lovea_thumb.gif" title="[爱你]"></li>
+                <li><img src="images/sada_thumb.gif" title="[泪]"></li>
+                <li><img src="images/heia_thumb.gif" title="[偷笑]"></li>
+                <li><img src="images/qq_thumb.gif" title="[亲亲]"></li>
+                <li><img src="images/sb_thumb.gif" title="[生病]"></li>
+                <li><img src="images/mb_thumb.gif" title="[太开心]"></li>
+                <li><img src="images/ldln_thumb.gif" title="[懒得理你]"></li>
+                <li><img src="images/yhh_thumb.gif" title="[右哼哼]"></li>
+                <li><img src="images/zhh_thumb.gif" title="[左哼哼]"></li>
+                <li><img src="images/x_thumb.gif" title="[嘘]"></li>
+                <li><img src="images/cry.gif" title="[衰]"></li>
+                <li><img src="images/wq_thumb.gif" title="[委屈]"></li>
+                <li><img src="images/t_thumb.gif" title="[吐]"></li>
+                <li><img src="images/k_thumb.gif" title="[打哈气]"></li>
+                <li><img src="images/bba_thumb.gif" title="[抱抱]"></li>
+                <li><img src="images/angrya_thumb.gif" title="[怒]"></li>
+                <li><img src="images/yw_thumb.gif" title="[疑问]"></li>
+                <li><img src="images/cza_thumb.gif" title="[馋嘴]"></li>
+                <li><img src="images/88_thumb.gif" title="[拜拜]"></li>
+                <li><img src="images/sk_thumb.gif" title="[思考]"></li>
+                <li><img src="images/sweata_thumb.gif" title="[汗]"></li>
+                <li><img src="images/sleepya_thumb.gif" title="[困]"></li>
+                <li><img src="images/sleepa_thumb.gif" title="[睡觉]"></li>
+                <li><img src="images/money_thumb.gif" title="[钱]"></li>
+                <li><img src="images/sw_thumb.gif" title="[失望]"></li>
+                <li><img src="images/cool_thumb.gif" title="[酷]"></li>
+                <li><img src="images/hsa_thumb.gif" title="[花心]"></li>
+                <li><img src="images/hatea_thumb.gif" title="[哼]"></li>
+                <li><img src="images/gza_thumb.gif" title="[鼓掌]"></li>
+                <li><img src="images/dizzya_thumb.gif" title="[晕]"></li>
+                <li><img src="images/bs_thumb.gif" title="[悲伤]"></li>
+                <li><img src="images/crazya_thumb.gif" title="[抓狂]"></li>
+                <li><img src="images/h_thumb.gif" title="[黑线]"></li>
+                <li><img src="images/yx_thumb.gif" title="[阴险]"></li>
+                <li><img src="images/nm_thumb.gif" title="[怒骂]"></li>
+                <li><img src="images/hearta_thumb.gif" title="[心]"></li>
+                <li><img src="images/unheart.gif" title="[伤心]"></li>
+                <li><img src="images/pig.gif" title="[猪头]"></li>
+                <li><img src="images/ok_thumb.gif" title="[ok]"></li>
+                <li><img src="images/ye_thumb.gif" title="[耶]"></li>
+                <li><img src="images/good_thumb.gif" title="[good]"></li>
+                <li><img src="images/no_thumb.gif" title="[不要]"></li>
+                <li><img src="images/z2_thumb.gif" title="[赞]"></li>
+                <li><img src="images/come_thumb.gif" title="[来]"></li>
+                <li><img src="images/sad_thumb.gif" title="[弱]"></li>
+                <li><img src="images/lazu_thumb.gif" title="[蜡烛]"></li>
+                <li><img src="images/clock_thumb.gif" title="[钟]"></li>
+                <li><img src="images/cake.gif" title="[蛋糕]"></li>
+                <li><img src="images/m_thumb.gif" title="[话筒]"></li>
+                <li><img src="images/weijin_thumb.gif" title="[围脖]"></li>
+                <li><img src="images/lxhzhuanfa_thumb.gif" title="[转发]"></li>
+                <li><img src="images/lxhluguo_thumb.gif" title="[路过这儿]"></li>
+                <li><img src="images/bofubianlian_thumb.gif" title="[bofu变脸]"></li>
+                <li><img src="images/gbzkun_thumb.gif" title="[gbz困]"></li>
+                <li><img src="images/boboshengmenqi_thumb.gif" title="[生闷气]"></li>
+                <li><img src="images/chn_buyaoya_thumb.gif" title="[不要啊]"></li>
+                <li><img src="images/daxiongleibenxiong_thumb.gif" title="[dx泪奔]"></li>
+                <li><img src="images/cat_yunqizhong_thumb.gif" title="[运气中]"></li>
+                <li><img src="images/youqian_thumb.gif" title="[有钱]"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="msgCon" class="msgCon">
+    </div>
+</div>
+<div id="calc" style="display: none;">
+    <input type="number" id="add_num1">
+    <span>+</span>
+    <input type="number" id="add_num2">
+    <button id="add_btn">=</button>
+    <input type="number" id="add_results" readonly>
+</div>
+<div id="time" style="display:none;"></div>
+<div id="countdown" style="display: none"></div>
+<script>
+    window.onload = function () {
+        var Ms_Mu = {
+            /**
+             * 在控制台打印乘法表
+             */
+            console_Multiplication_table: () => {
+                let str = "";
+                for (let i = 1; i < 10; i++) {
+                    for(let j = 1; j <= i; j++){
+                        if(j === 3 && i <= 4){
+                            str += " " + j + "X" + i + "=" + j*i + "  ";
+                        }else {
+                            str += j + "X" + i + "=" + j*i + "  ";
+                        }
+                    }
+                    str += "\n";
+                }
+                console.info(str);
+            },
+            /**
+             * 在页面输出乘法表
+             */
+            document_Multiplication_table:  () => {
+                for(let i =1; i < 10; i++) {
+                    document.write("<br/>");
+                    for(let j = 1;j <= i; j++) {
+                        if(j === 3 && i <= 4) {
+                            document.write("&nbsp;&nbsp;" + j + "X" + i + "=" + j*i + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;");
+                        }else {
+                            document.write(j + "X" + i + "=" + j*i + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        }
+                    }
+                }
+            },
+            /**
+             * 在页面用表格的形式输出乘法表
+             */
+            document_Table_Multiplication_table: () => {
+                var bg = "<table>";
+                for(let i = 1;i <= 9;i ++){
+                    bg += "<tr>";
+                    for(let j = 1;j <= i;j ++){
+                        bg += "<td>" + i + "*" + j + "=" + i * j + "</td>";
+                    }
+                    bg += "</td>";
+                }
+                bg += "</table>";
+                document.write(bg);
+            },
+            /**
+             * 获取当前时间
+             * @param element
+             */
+            getLocalTime: (element) => {
+                let data = new Date(),
+                    year = data.getFullYear(),
+                    month = data.getMonth() + 1,
+                    day = data.getDate(),
+                    hours = data.getHours(),
+                    minutes = data.getMinutes(),
+                    second = data.getSeconds(),
+                    time_text = year + "-" + month + "-" + day  + "   " + hours + ":" + minutes + ":" + second;
+                if(element){
+                    element.innerText = time_text;
+                }else {
+                    return time_text;
+                }
+            },
+            /**
+             * 数组去重
+             * @param array
+             */
+            uniq: (array) => {
+                let temp = [];
+                for(let i = 0;i<array.length;i++){
+                    if(temp.indexOf(array[i] === -1)) {
+                        temp.push(array[i])
+                    }
+                }
+                return temp;
+            },
+            /**
+             * 距离某天的时间
+             * @param year
+             * @param month
+             * @param day
+             * @param hour
+             * @param minutes
+             * @param second
+             * @returns {{_day: number, _hour: number, _minutes: number, _second: number}}
+             */
+            countdown: (year,month,day,hour,minutes,second) => {
+                //给定时间的时间蹉
+                let dateToUnix = new Date(year,month,day,hour,minutes,second).getTime()/1000,
+                    nowDateToUnix = Math.floor(new Date().getTime()/1000),
+                    date = dateToUnix - nowDateToUnix,
+                    d = Math.floor(date/(60*60*24)),
+                    h = Math.floor(date%(60*60*24)/(60*60)),
+                    m = Math.floor(date%(60*60*24)%(60*60)/60),
+                    s = Math.floor(date%(60*60*24)%(60*60)%60);
+                return {
+                    _day: d,
+                    _hour: h,
+                    _minutes: m,
+                    _second: s
+                }
+            },
+            /**
+             * 发表内容函数
+             * @param time
+             * @param html
+             * @returns {string}
+             */
+            msBoxHtml: (time,html) => {
+                let _html = '   <div class="msgBox">\n' +
+                    '            <div class="headUrl">\n' +
+                    '                <img src="images/1.jpg" width="50" height="50">\n' +
+                    '                <div>\n' +
+                    '                    <span class="title">木林森里没有木</span>\n' +
+                    '                    <span class="time">'+ time +'</span>\n' +
+                    '                </div>\n' +
+                    '                <a class="del">删除</a>\n' +
+                    '            </div>\n' +
+                    '            <div class="msgTxt">' + html +
+                    '            </div>\n' +
+                    '        </div>';
+                return _html;
+            }
+        };
+        var btn = document.querySelector("#add_btn");
+        btn.onclick = () => {
+            let num1 = document.querySelector("#add_num1").value,
+                num2 = document.querySelector("#add_num2").value,
+                num3 = document.querySelector("#add_results");
+            if(num1 !== "" && num2 !== "") {
+                num3.value = Number(num1) + Number(num2)
+            }else {
+                alert("请输入数字");
+            }
+        };
+        var time_box = document.querySelector("#time");
+        Ms_Mu.getLocalTime(time_box);
+        setInterval(() => {
+            Ms_Mu.getLocalTime(time_box);
+            let time_coun = Ms_Mu.countdown(2019,08 ,06 ,09 ,00 ,00);
+            document.querySelector("#countdown").innerText = "距离毕业时间2019年08月06日09:00:00还有  " +  time_coun._day + "天" + time_coun._hour + "小时" + time_coun._minutes + "分" + time_coun._second + "秒";
+        },1000);
+        var submit = document.querySelector(".submit"),
+            gif_enter = document.querySelector(".gif_enter"),
+            textarea = document.querySelector("#textarea"),
+            face = document.querySelector(".face"),
+            msgCon = document.querySelector(".msgCon"),
+            msgBoxList = JSON.parse(window.localStorage.getItem("msStore")) || [];
+        /**
+         * 调用浏览器存储渲染留言
+         */
+        if(msgBoxList.length){
+            let _html = '';
+            msgBoxList.forEach(item  => {
+                _html += item;
+            });
+            msgCon.innerHTML = _html;
+        }
+        /**
+         * 点击出现表情图或关闭表情图
+         */
+        gif_enter.onclick = (ev) => {
+            if (face.getAttribute("class").split(" ").indexOf("none") !== -1) {
+                face.setAttribute("class","face")
+            }else {
+                face.setAttribute("class","face none")
+            }
+            ev.stopPropagation();
+        };
+        /**
+         * 点击某个表情生成在输入框
+         * @param ev
+         */
+        face.onclick = (ev) => {
+            ev.stopPropagation();
+          let e = ev || window.event,
+              target = e.target || e.srcElement,
+              textarea_Html = textarea.innerHTML,
+              src = target.getAttribute("src");
+          if(src && target.title){
+              textarea.innerHTML = textarea_Html + "<img src='"+src+"' title='"+target.title+"'>";
+              face.setAttribute("class","face none")
+          }
+        };
+        /**
+         * 点击页面关闭表情图
+         */
+        document.onclick = () => {
+            if (face.getAttribute("class").split(" ").indexOf("none") === -1) {
+                face.setAttribute("class","face none")
+            }
+        };
+        /**
+         * 点击发表生成对应的元素同时清空textarea
+         */
+        submit.onclick = () => {
+            let nowTime = Ms_Mu.getLocalTime(),
+                txtHtml = textarea.innerHTML,
+                nowText = Ms_Mu.msBoxHtml(nowTime,txtHtml),
+                _html = nowText + msgCon.innerHTML;
+            msgCon.innerHTML = _html;
+            msgBoxList.unshift(nowText);
+            window.localStorage.setItem("msStore",JSON.stringify(msgBoxList));
+            textarea.innerHTML = "";
+        };
+        msgCon.onclick = (ev) => {
+            let e = ev || window.event,
+                target = e.target || e.srcElement;
+            if(target.getAttribute("class") === "del"){
+                let _this_box = target.parentNode.parentNode;
+                let index;
+                for(let i =0;i<msgCon.children.length;i++){
+                    if(msgCon.children[i] == _this_box) {
+                        index = i;
+                    }
+                }
+                msgCon.removeChild(_this_box);
+                msgBoxList.splice(index,1);
+                window.localStorage.setItem("msStore",JSON.stringify(msgBoxList));
+            }
+        }
+    };
+</script>
+</body>
+</html>
