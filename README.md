@@ -7,7 +7,7 @@
     3.querySelector querySelectorAll 使用
     4.原生js事件冒泡使用
     5.原生js事件委托使用
-    6.数组的unshift splice使用
+    6.数组的unshift 字符串splice使用
     7.localStorage本地存储存取
     8.JSON.stringify() JSON.parse()
     9.html5 contenteditable 属性使用
